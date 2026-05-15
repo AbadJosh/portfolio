@@ -100,15 +100,13 @@ export default function Hero() {
 
           <h1
             style={{
-              fontSize: "clamp(3rem, 6vw, 5rem)",
+              fontSize: "clamp(3.5rem, 6vw, 5.5rem)",
               fontWeight: 800,
               lineHeight: 1.1,
               marginBottom: 16,
             }}
           >
-            <span className="gradient-text">Joshua</span>
-            <br />
-            <span style={{ color: "#fff" }}>D. Abad</span>
+            <span className="gradient-text">Josh</span>
           </h1>
 
           {/* Typewriter role */}
