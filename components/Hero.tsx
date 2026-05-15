@@ -134,7 +134,7 @@ export default function Hero() {
           <p
             style={{
               color: "rgba(255,255,255,0.85)",
-              fontSize: 15,
+              fontSize: 18,
               lineHeight: 1.7,
               marginBottom: 32,
               maxWidth: 460,
@@ -233,13 +233,13 @@ export default function Hero() {
           }}
         >
           {[
-            { value: "7+",      label: "Years Experience" },
-            { value: "50+",     label: "Pipelines Built" },
-            { value: "100+ TB", label: "Data Processed" },
-            { value: "3",       label: "Cloud Platforms" },
+            { value: "7+",            label: "Years Experience" },
+            { value: "200+",          label: "Pipelines Built" },
+            { value: "Terabyte-Scale", label: "Data Processed" },
+            { value: "3",             label: "Cloud Platforms" },
           ].map((s) => (
             <div key={s.label}>
-              <p style={{ fontSize: 24, fontWeight: 800, color: "#fff" }}>{s.value}</p>
+              <p style={{ fontSize: s.value.length > 4 ? 16 : 24, fontWeight: 800, color: "#fff", letterSpacing: s.value.length > 4 ? "-0.02em" : "normal" }}>{s.value}</p>
               <p style={{ fontSize: 12, color: "rgba(100,116,139,1)", marginTop: 2 }}>{s.label}</p>
             </div>
           ))}
