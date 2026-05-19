@@ -1,7 +1,31 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function requireEnv(name: string): string {
+  const val = process.env[name];
+  if (!val) throw new Error(`${name} environment variable is not set`);
+  return val;
+}
+
+const resend = new Resend(requireEnv("RESEND_API_KEY"));
+const contactEmail = requireEnv("CONTACT_EMAIL");
+const contactFrom = requireEnv("CONTACT_FROM");
+
+// In-memory rate limiter: 5 requests per IP per hour
+const rateLimitMap = new Map<string, number[]>();
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = (rateLimitMap.get(ip) ?? []).filter(
+    (t) => now - t < RATE_LIMIT_WINDOW_MS
+  );
+  if (timestamps.length >= RATE_LIMIT_MAX) return true;
+  timestamps.push(now);
+  rateLimitMap.set(ip, timestamps);
+  return false;
+}
 
 function h(str: string): string {
   return str
@@ -12,32 +36,84 @@ function h(str: string): string {
     .replace(/'/g, "&#039;");
 }
 
+// RFC 5321 compliant email regex
+const emailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
+
 export async function POST(request: NextRequest) {
+  // CSRF: verify request originates from same host
+  const origin = request.headers.get("origin");
+  const host = request.headers.get("host");
+  try {
+    const originHost = new URL(origin ?? "").host;
+    if (!host || originHost !== host) {
+      return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+    }
+  } catch {
+    return NextResponse.json({ error: "Forbidden." }, { status: 403 });
+  }
+
+  // Rate limiting by IP
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    request.headers.get("x-real-ip") ??
+    "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, subject, message, website } = body;
+
+    // Honeypot — real users never fill this field; bots do
+    if (website) {
+      return NextResponse.json({ message: "Message sent successfully." });
+    }
 
     if (!name || !email || !subject || !message) {
-      return NextResponse.json({ error: "All fields are required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "All fields are required." },
+        { status: 400 }
+      );
     }
 
     if (
-      typeof name    !== "string" || name.length    > 200  ||
-      typeof email   !== "string" || email.length   > 320  ||
-      typeof subject !== "string" || subject.length > 300  ||
-      typeof message !== "string" || message.length > 5000
+      typeof name !== "string" ||
+      name.length > 200 ||
+      typeof email !== "string" ||
+      email.length > 320 ||
+      typeof subject !== "string" ||
+      subject.length > 300 ||
+      typeof message !== "string" ||
+      message.length > 5000
     ) {
-      return NextResponse.json({ error: "Input exceeds allowed length." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Input exceeds allowed length." },
+        { status: 400 }
+      );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid email address." },
+        { status: 400 }
+      );
+    }
+
+    if (!/^[\w\s\-.,!?&()'":@#]+$/.test(subject)) {
+      return NextResponse.json(
+        { error: "Subject contains invalid characters." },
+        { status: 400 }
+      );
     }
 
     const { error } = await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>",
-      to: ["joshua.abad.development@gmail.com"],
+      from: contactFrom,
+      to: [contactEmail],
       replyTo: email,
       subject: `[Portfolio] ${h(subject)}`,
       html: `
@@ -58,11 +134,17 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
-      return NextResponse.json({ error: "Failed to send email. Please try again." }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to send email. Please try again." },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ message: "Message sent successfully." });
   } catch {
-    return NextResponse.json({ error: "An unexpected error occurred." }, { status: 500 });
+    return NextResponse.json(
+      { error: "An unexpected error occurred." },
+      { status: 500 }
+    );
   }
 }

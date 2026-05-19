@@ -7,7 +7,7 @@ export default function Footer() {
         color: "#243650",
         letterSpacing: "0.04em",
       }}>
-        © 2026 Joshua D. Abad · Built with Next.js
+        © 2026 Joshua D. Abad
       </p>
     </footer>
   );

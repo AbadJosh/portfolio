@@ -12,7 +12,7 @@ export default function Contact() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", message: "", website: "" });
 
   const handleSubmit = async (e: { preventDefault(): void }) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, subject: "Portfolio Contact" }),
+        body: JSON.stringify({ name: form.name, email: form.email, message: form.message, subject: "Portfolio Contact", website: form.website }),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -132,6 +132,20 @@ export default function Contact() {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   disabled={isBusy} placeholder="What's on your mind?"
                   style={{ resize: "none" }}
+                />
+              </div>
+
+              {/* Honeypot — hidden from users, bots fill it, server rejects if non-empty */}
+              <div style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }} aria-hidden="true">
+                <label htmlFor="website">Website</label>
+                <input
+                  id="website"
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.website}
+                  onChange={(e) => setForm({ ...form, website: e.target.value })}
                 />
               </div>
 
