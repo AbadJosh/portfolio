@@ -2,150 +2,127 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Briefcase, GraduationCap, Code2, TrendingUp, MapPin } from "lucide-react";
-
-const timeline = [
-  {
-    period: "Jan 2024 – Present",
-    role: "Data Engineer",
-    company: "FLNT",
-    location: "Australia · Remote",
-    desc: "Architecting cloud-native data pipelines handling 10M+ daily events on Azure. Leading ETL framework design adopted across 3 product teams.",
-    icon: Briefcase,
-    color: "#3b82f6",
-  },
-  {
-    period: "Mar 2021 – Dec 2023",
-    role: "Senior Data Engineer",
-    company: "TechVantage Solutions",
-    location: "Philippines",
-    desc: "Owned the company data platform on Azure and GCP. Introduced Great Expectations quality layer that reduced pipeline incidents by 60%.",
-    icon: TrendingUp,
-    color: "#8b5cf6",
-  },
-  {
-    period: "Jun 2019 – Feb 2021",
-    role: "Data Engineer",
-    company: "DataBridge Analytics",
-    location: "Philippines",
-    desc: "Delivered AWS Redshift data warehouse (5TB+) for enterprise clients. Automated Glue ETL workflows and built Tableau dashboards for 50+ users.",
-    icon: Code2,
-    color: "#3b82f6",
-  },
-  {
-    period: "Jul 2018 – May 2019",
-    role: "Junior Data Engineer",
-    company: "CloudSphere",
-    location: "Philippines",
-    desc: "Built ETL scripts in Python and SQL. Optimized PostgreSQL queries, reducing report generation time by 40%.",
-    icon: Code2,
-    color: "#6366f1",
-  },
-  {
-    period: "2013 – 2018",
-    role: "BS Information Technology",
-    company: "Technological Institute of the Philippines",
-    location: "Philippines",
-    desc: "Foundation in computer science, database systems, algorithms, and software engineering principles.",
-    icon: GraduationCap,
-    color: "#64748b",
-  },
-];
+import { MapPin } from "lucide-react";
+import Image from "next/image";
 
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="about" className="py-24 bg-[#060d1f]">
-      <div className="max-w-6xl mx-auto px-6 sm:px-10" ref={ref}>
+    <section id="about" style={{ background: "#060d1f", padding: "96px 0" }}>
+      <style>{`
+        .about-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 48px;
+          align-items: center;
+        }
+        @media (min-width: 768px) {
+          .about-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+        }
+      `}</style>
 
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 48px" }} ref={ref}>
+
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-14"
+          style={{ textAlign: "center", marginBottom: 56 }}
         >
           <h2 className="section-heading">About Me</h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Left: bio */}
+        <div className="about-grid">
+
+          {/* Left — illustration */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.1 }}
+            style={{ position: "relative", borderRadius: 16, overflow: "hidden", lineHeight: 0 }}
           >
-            <h3 className="section-subheading">A bit about me</h3>
-            <div className="space-y-4 text-slate-400 text-sm leading-7 mb-8">
-              <p>
-                I&apos;m <span className="text-white font-semibold">Joshua D. Abad</span>, a Data Engineer
-                based in Calabarzon, Philippines, working remotely with{" "}
-                <span className="text-[#3b82f6]">FLNT</span> in Australia.
-              </p>
-              <p>
-                With 7+ years of hands-on experience, I specialize in designing and building scalable
-                data pipelines, cloud data platforms, and ETL/ELT frameworks that transform raw data
-                into reliable signals for business decisions.
-              </p>
-              <p>
-                I care deeply about data quality, observability, and building systems that teams
-                love maintaining. My philosophy:{" "}
-                <em className="text-slate-300">
-                  &quot;Data is only as valuable as the infrastructure built to move and shape it.&quot;
-                </em>
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 text-slate-500 text-sm">
-              <MapPin size={14} className="text-[#3b82f6]" />
-              Calabarzon, Philippines · Open to Remote Worldwide
-            </div>
+            <Image
+              src="/about-me-page.png"
+              alt="Josh relaxing — gamer at heart"
+              width={680}
+              height={510}
+              style={{ width: "100%", height: "auto", borderRadius: 16, display: "block" }}
+              priority
+            />
+            {/* subtle bottom fade */}
+            <div style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 80,
+              background: "linear-gradient(to top, #060d1f, transparent)",
+              borderRadius: "0 0 16px 16px",
+            }} />
           </motion.div>
 
-          {/* Right: timeline */}
+          {/* Right — bio */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.15 }}
           >
-            <h3 className="section-subheading">Experience &amp; Education</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16, color: "#94a3b8", fontSize: 15, lineHeight: 1.85, marginBottom: 32 }}>
+              <p style={{ margin: 0 }}>
+                I&apos;m <strong style={{ color: "#fff" }}>Joshua D. Abad</strong> — most people call me{" "}
+                <strong style={{ color: "#fff" }}>Josh</strong>, or just{" "}
+                <strong style={{ color: "#fff" }}>Bad</strong> (short for Abad, the nickname that stuck).
+                I&apos;m a Data Engineer based in Calabarzon, Philippines, working remotely with clients internationally.
+              </p>
+              <p style={{ margin: 0 }}>
+                With 7+ years of hands-on experience, I specialize in designing and building scalable data pipelines,
+                cloud data platforms, and ETL/ELT frameworks that transform raw data into reliable signals for business
+                decisions. Every system I ship is held to one standard:{" "}
+                <span style={{ color: "#cbd5e1" }}>reliable, robust, and ready to scale.</span>
+              </p>
+              <p style={{ margin: 0 }}>
+                I care deeply about data quality, observability, and building infrastructure that teams genuinely enjoy
+                maintaining. Data infrastructure is something I can talk about for hours — it&apos;s not just work,
+                it&apos;s a craft.
+              </p>
+              <p style={{ margin: 0 }}>
+                Outside of engineering, I&apos;m a passionate gamer — PC and mobile both. You&apos;ll also find me
+                watching anime or action/military films, hitting the gym, or deep-diving into something new. If none
+                of the above, I&apos;m probably sleeping.
+              </p>
+            </div>
 
-            <div className="relative">
-              <div className="absolute left-4 top-2 bottom-2 w-px bg-[#1e3a5f]" />
+            {/* Quote callout */}
+            <div style={{
+              position: "relative",
+              marginBottom: 28,
+              padding: "18px 24px",
+              background: "rgba(59,130,246,0.06)",
+              borderRadius: 12,
+              border: "1px solid rgba(59,130,246,0.15)",
+            }}>
+              <div style={{
+                position: "absolute",
+                left: 0, top: 0, bottom: 0,
+                width: 3,
+                borderRadius: "12px 0 0 12px",
+                background: "linear-gradient(180deg, #3b82f6, #6d28d9)",
+              }} />
+              <p style={{ margin: 0, fontSize: 14, fontStyle: "italic", color: "#cbd5e1", lineHeight: 1.7 }}>
+                &ldquo;Data is only as valuable as the infrastructure built to move and shape it.&rdquo;
+              </p>
+            </div>
 
-              <div className="space-y-6">
-                {timeline.map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.2 + i * 0.08 }}
-                    className="relative pl-12"
-                  >
-                    {/* dot */}
-                    <div
-                      className="absolute left-0 top-1 w-8 h-8 rounded-lg flex items-center justify-center bg-[#0a1228] border border-[#1e3a5f]"
-                    >
-                      <item.icon size={14} style={{ color: item.color }} />
-                    </div>
-
-                    <div className="card p-4">
-                      <div className="flex flex-wrap items-start justify-between gap-1 mb-1">
-                        <div>
-                          <p className="text-white font-semibold text-sm">{item.role}</p>
-                          <p className="text-[#3b82f6] text-xs font-medium">{item.company}</p>
-                        </div>
-                        <span className="text-slate-600 text-xs">{item.period}</span>
-                      </div>
-                      <p className="text-slate-600 text-xs mb-2">{item.location}</p>
-                      <p className="text-slate-400 text-xs leading-relaxed">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+            {/* Location */}
+            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#475569", fontSize: 13 }}>
+              <MapPin size={13} style={{ color: "#3b82f6", flexShrink: 0 }} />
+              Calabarzon, Philippines · Open to Remote Worldwide
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

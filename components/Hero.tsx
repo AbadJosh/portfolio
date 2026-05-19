@@ -204,7 +204,7 @@ export default function Hero() {
 
           {/* CTAs */}
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
-            <button onClick={() => scrollTo("#projects")} className="btn-primary">
+            <button onClick={() => scrollTo("#experience")} className="btn-primary">
               View My Work <ArrowRight size={15} />
             </button>
             <a href="/resume.pdf" download className="btn-ghost">

@@ -1,15 +1,14 @@
-"use client";
-
-import { Heart } from "lucide-react";
-
 export default function Footer() {
   return (
-    <footer className="py-6 border-t border-[#1e3a5f]/50 bg-[#050b18]">
-      <div className="max-w-6xl mx-auto px-6 sm:px-10 text-center">
-        <p className="text-slate-600 text-sm flex items-center justify-center gap-1.5">
-          Made with <Heart size={13} className="text-red-500 fill-red-500" /> by Joshua D. Abad
-        </p>
-      </div>
+    <footer style={{ background: "#050b18", borderTop: "1px solid #0d1e35", padding: "28px 32px" }}>
+      <p style={{
+        textAlign: "center",
+        fontSize: 12,
+        color: "#243650",
+        letterSpacing: "0.04em",
+      }}>
+        © 2026 Joshua D. Abad · Built with Next.js
+      </p>
     </footer>
   );
 }

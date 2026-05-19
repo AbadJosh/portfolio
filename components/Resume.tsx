@@ -2,178 +2,131 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Download, Award, GraduationCap } from "lucide-react";
-
-const experience = [
-  {
-    role: "Data Engineer",
-    company: "FLNT",
-    period: "Jan 2024 – Present",
-    location: "Australia · Remote",
-    bullets: [
-      "Architected cloud-native pipelines handling 10M+ daily events on Azure",
-      "Led migration of legacy ETL to dbt + Airflow, reducing runtime by 45%",
-      "Built reusable ETL framework adopted by 3 product teams, cutting onboarding 60%",
-      "Designed Snowflake schema supporting 200+ downstream analytics tables",
-    ],
-    color: "#3b82f6",
-  },
-  {
-    role: "Senior Data Engineer",
-    company: "TechVantage Solutions",
-    period: "Mar 2021 – Dec 2023",
-    location: "Philippines",
-    bullets: [
-      "Owned company data platform on Azure and GCP serving 15+ stakeholders",
-      "Great Expectations quality layer reduced pipeline incident response by 60%",
-      "Delivered BigQuery warehouse for retail client, cutting query costs 70%",
-      "Mentored 3 junior engineers on data modeling and cloud architecture",
-    ],
-    color: "#8b5cf6",
-  },
-  {
-    role: "Data Engineer",
-    company: "DataBridge Analytics",
-    period: "Jun 2019 – Feb 2021",
-    location: "Philippines",
-    bullets: [
-      "Built AWS Redshift warehouse (5TB+) with row-level security for enterprise clients",
-      "Automated 12 manual data processes with AWS Glue ETL workflows",
-      "Designed star-schema models powering Tableau dashboards for 50+ users",
-    ],
-    color: "#06b6d4",
-  },
-  {
-    role: "Junior Data Engineer",
-    company: "CloudSphere",
-    period: "Jul 2018 – May 2019",
-    location: "Philippines",
-    bullets: [
-      "Built ETL scripts in Python and SQL ingesting from 8+ REST API sources",
-      "Optimized PostgreSQL queries, reducing report generation time by 40%",
-    ],
-    color: "#6366f1",
-  },
-];
+import { Download, Award } from "lucide-react";
 
 const certifications = [
-  { name: "Azure Data Engineer Associate (DP-203)", issuer: "Microsoft", color: "#0078d4" },
-  { name: "Professional Data Engineer", issuer: "Google Cloud", color: "#4285f4" },
-  { name: "Data Analytics Specialty", issuer: "Amazon Web Services", color: "#ff9900" },
-  { name: "dbt Fundamentals Certification", issuer: "dbt Labs", color: "#ff694a" },
+  {
+    name: "Azure Data Engineer Associate",
+    badge: "DP-203",
+    issuer: "Microsoft",
+    color: "#0078d4",
+  },
+  {
+    name: "Professional Data Engineer",
+    badge: "GCP",
+    issuer: "Google Cloud",
+    color: "#4285f4",
+  },
+  {
+    name: "Data Analytics Specialty",
+    badge: "AWS",
+    issuer: "Amazon Web Services",
+    color: "#ff9900",
+  },
+  {
+    name: "dbt Fundamentals",
+    badge: "dbt",
+    issuer: "dbt Labs",
+    color: "#ff694a",
+  },
 ];
 
 export default function Resume() {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="resume" className="py-24 bg-[#050b18]">
-      <div className="max-w-6xl mx-auto px-6 sm:px-10" ref={ref}>
+    <section id="resume" style={{ background: "#060d1f", padding: "100px 0" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 48px" }} ref={ref}>
 
+        {/* Heading + Download */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14"
+          style={{
+            display: "flex", alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap", gap: 16,
+            marginBottom: 64,
+          }}
         >
-          <h2 className="section-heading !text-left">Resume</h2>
+          <h2 className="section-heading" style={{ margin: 0 }}>Certifications</h2>
           <a
             href="/resume.pdf"
             download
-            className="btn-ghost flex-shrink-0"
+            className="btn-ghost"
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}
           >
-            <Download size={14} /> Download PDF
+            <Download size={14} />
+            Download Resume
           </a>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[1fr_320px] gap-12">
-          {/* Experience */}
-          <div>
-            <h3 className="section-subheading">Professional Experience</h3>
+        {/* Cert cards grid */}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: 20,
+        }}>
+          {certifications.map((cert, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.1 + i * 0.09, duration: 0.5 }}
+              style={{
+                padding: "24px 26px",
+                borderRadius: 16,
+                background: "#050b18",
+                borderTop: `1px solid ${cert.color}35`,
+                borderRight: `1px solid ${cert.color}35`,
+                borderBottom: `1px solid ${cert.color}35`,
+                borderLeft: `3px solid ${cert.color}`,
+                boxShadow: `0 0 24px ${cert.color}0e, inset 0 0 20px ${cert.color}06`,
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {/* Corner glow */}
+              <div style={{
+                position: "absolute", top: -24, right: -24,
+                width: 96, height: 96, borderRadius: "50%",
+                background: `radial-gradient(circle, ${cert.color}12 0%, transparent 70%)`,
+                pointerEvents: "none",
+              }} />
 
-            <div className="space-y-6 mt-6">
-              {experience.map((job, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.1 + i * 0.09 }}
-                  className="card p-5"
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                    <div>
-                      <p className="text-white font-semibold text-sm">{job.role}</p>
-                      <p className="text-xs font-medium mt-0.5" style={{ color: job.color }}>{job.company}</p>
-                    </div>
-                    <div className="text-right text-xs text-slate-500">
-                      <p>{job.period}</p>
-                      <p className="mt-0.5">{job.location}</p>
-                    </div>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+                <div style={{
+                  width: 46, height: 46, borderRadius: 12, flexShrink: 0,
+                  background: `${cert.color}12`,
+                  border: `1px solid ${cert.color}35`,
+                  boxShadow: `0 0 14px ${cert.color}25`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <Award size={20} style={{ color: cert.color, filter: `drop-shadow(0 0 5px ${cert.color})` }} />
+                </div>
+                <div>
+                  <p style={{ fontSize: 15, fontWeight: 700, color: "#f1f5f9", marginBottom: 6, lineHeight: 1.3 }}>
+                    {cert.name}
+                  </p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{
+                      fontSize: 10, fontWeight: 700, letterSpacing: "0.1em",
+                      padding: "2px 8px", borderRadius: 99,
+                      background: `${cert.color}18`,
+                      border: `1px solid ${cert.color}45`,
+                      color: cert.color,
+                      textTransform: "uppercase",
+                    }}>{cert.badge}</span>
+                    <span style={{ fontSize: 12, color: "#475569" }}>{cert.issuer}</span>
                   </div>
-                  <ul className="space-y-1.5 mt-3">
-                    {job.bullets.map((b, j) => (
-                      <li key={j} className="flex items-start gap-2 text-xs text-slate-400 leading-relaxed">
-                        <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0 bg-[#3b82f6]" />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: education + certs */}
-          <div className="space-y-10">
-            {/* Education */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.2 }}
-            >
-              <h3 className="section-subheading flex items-center gap-2">
-                <GraduationCap size={16} /> Education
-              </h3>
-              <div className="card p-4 mt-4">
-                <p className="text-white font-semibold text-sm">BS Information Technology</p>
-                <p className="text-[#3b82f6] text-xs mt-1">Technological Institute of the Philippines</p>
-                <p className="text-slate-500 text-xs mt-1">2013 – 2018 · Philippines</p>
+                </div>
               </div>
             </motion.div>
-
-            {/* Certifications */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.3 }}
-            >
-              <h3 className="section-subheading flex items-center gap-2">
-                <Award size={16} /> Certifications
-              </h3>
-              <div className="space-y-3 mt-4">
-                {certifications.map((c, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={inView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.35 + i * 0.06 }}
-                    className="card p-3 flex items-center gap-3"
-                  >
-                    <div
-                      className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{ background: c.color }}
-                    />
-                    <div>
-                      <p className="text-slate-300 text-xs font-medium">{c.name}</p>
-                      <p className="text-slate-600 text-[11px] mt-0.5">{c.issuer}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+          ))}
         </div>
+
       </div>
     </section>
   );

@@ -1,23 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
-  { label: "Home",     href: "#home" },
-  { label: "About",    href: "#about" },
-  { label: "Skills",   href: "#skills" },
-  { label: "Projects", href: "#projects" },
-  { label: "Resume",   href: "#resume" },
-  { label: "Contact",  href: "#contact" },
+  { label: "Home",       href: "#home" },
+  { label: "About",      href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Skills",     href: "#skills" },
+  { label: "Contact",    href: "#contact" },
 ];
 
 function Logo({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
+      suppressHydrationWarning
       style={{
         background: "none",
         border: "none",
@@ -44,6 +44,7 @@ export default function Navbar() {
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive]         = useState("home");
+  const clickLock                   = useRef(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -55,8 +56,10 @@ export default function Navbar() {
     const ids = navLinks.map((l) => l.href.replace("#", ""));
     const observer = new IntersectionObserver(
       (entries) =>
-        entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); }),
-      { threshold: 0.3, rootMargin: "-64px 0px 0px 0px" }
+        entries.forEach((e) => {
+          if (e.isIntersecting && !clickLock.current) setActive(e.target.id);
+        }),
+      { threshold: 0.2, rootMargin: "-64px 0px 0px 0px" }
     );
     ids.forEach((id) => {
       const el = document.getElementById(id);
@@ -67,6 +70,9 @@ export default function Navbar() {
 
   const go = (href: string) => {
     setMobileOpen(false);
+    setActive(href.replace("#", ""));
+    clickLock.current = true;
+    setTimeout(() => { clickLock.current = false; }, 900);
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
