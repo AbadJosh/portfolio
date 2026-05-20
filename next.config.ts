@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  experimental: {
+    inlineCss: true,
+    optimizePackageImports: ["framer-motion"],
+  },
 };
 
 export default nextConfig;

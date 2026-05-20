@@ -44,6 +44,7 @@ export default function About() {
               width={680}
               height={510}
               sizes="(max-width: 768px) 100vw, 50vw"
+              quality={70}
               style={{ width: "100%", height: "auto", borderRadius: 16, display: "block" }}
             />
             <div style={{
