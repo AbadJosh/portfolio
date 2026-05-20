@@ -113,19 +113,19 @@ export default function Experience() {
     const fwd = i > active;
     setDirection(fwd ? 1 : -1);
 
-    // Phase 1 — shuffle: tilt stack further back (forward) or pull toward viewer (backward)
+    // Phase 1 — quick tilt to signal state change
     await stackControls.start({
-      rotateY: fwd ? SLANT + 22 : SLANT - 18,
-      transition: { duration: 0.18, ease: "easeIn" },
+      rotateY: fwd ? SLANT + 14 : SLANT - 10,
+      transition: { duration: 0.1, ease: "easeIn" },
     });
 
-    // Phase 2 — swap content at peak of animation
+    // Phase 2 — swap content at peak (enter/exit now run simultaneously)
     setActive(i);
 
     // Phase 3 — settle back to resting slant
     stackControls.start({
       rotateY: SLANT,
-      transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
     });
   };
 
@@ -245,17 +245,22 @@ export default function Experience() {
                 transition: "background 0.4s",
               }} />
 
-              {/* content */}
-              <AnimatePresence mode="wait" custom={direction}>
+              {/* content — absolute so enter/exit overlap without layout shift */}
+              <AnimatePresence custom={direction}>
                 <motion.div
                   key={active}
                   custom={direction}
-                  initial={{ opacity: 0, x: direction * 40 }}
+                  initial={{ opacity: 0, x: direction * 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: direction * -40 }}
-                  transition={{ duration: 0.22, ease: "easeInOut" }}
+                  exit={{ opacity: 0, x: direction * -20 }}
+                  transition={{ duration: 0.16, ease: "easeInOut" }}
                   className="exp-card-body"
-                  style={{ padding: "34px 40px", height: "100%", boxSizing: "border-box" }}
+                  style={{
+                    position: "absolute", inset: 0,
+                    padding: "34px 40px", boxSizing: "border-box",
+                    willChange: "transform, opacity",
+                    overflowY: "auto",
+                  }}
                 >
                   {/* tag + period */}
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
