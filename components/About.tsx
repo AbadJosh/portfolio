@@ -44,7 +44,6 @@ export default function About() {
               width={680}
               height={510}
               style={{ width: "100%", height: "auto", borderRadius: 16, display: "block" }}
-              priority
             />
             <div style={{
               position: "absolute", bottom: 0, left: 0, right: 0, height: 80,
