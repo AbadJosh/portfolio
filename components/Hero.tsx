@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import Image from "next/image";
-import { ArrowRight, Download } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 
 export default function Hero() {
@@ -147,7 +146,7 @@ export default function Hero() {
           {/* Social icons */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
             <a
-              href="https://github.com/jabadDEV"
+              href="https://github.com/AbadJosh"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -202,15 +201,6 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* CTAs */}
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
-            <button onClick={() => scrollTo("#experience")} className="btn-primary">
-              View My Work <ArrowRight size={15} />
-            </button>
-            <a href="/resume.pdf" download className="btn-ghost">
-              <Download size={15} /> Resume
-            </a>
-          </div>
         </motion.div>
 
         {/* Stats row */}

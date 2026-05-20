@@ -283,7 +283,7 @@ export default function Contact() {
                 Connect
               </p>
               <div style={{ display: "flex", gap: 12 }}>
-                <a href="https://github.com/jabadDEV" target="_blank" rel="noopener noreferrer" className="ct-social" aria-label="GitHub">
+                <a href="https://github.com/AbadJosh" target="_blank" rel="noopener noreferrer" className="ct-social" aria-label="GitHub">
                   <GithubIcon size={18} />
                 </a>
                 <a href="https://www.linkedin.com/in/joshua-abad/" target="_blank" rel="noopener noreferrer" className="ct-social" aria-label="LinkedIn">
