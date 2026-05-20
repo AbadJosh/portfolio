@@ -29,7 +29,7 @@ export default function Contact() {
         throw new Error(data.error || "Failed to send.");
       }
       setStatus("success");
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: "", email: "", message: "", website: "" });
       setTimeout(() => setStatus("idle"), 6000);
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
