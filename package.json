@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@vercel/speed-insights": "^2.0.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
@@ -17,6 +18,13 @@
     "react-type-animation": "^3.2.0",
     "resend": "^6.12.3"
   },
+  "browserslist": [
+    "chrome >= 88",
+    "firefox >= 85",
+    "safari >= 14",
+    "edge >= 88",
+    "not dead"
+  ],
   "overrides": {
     "postcss": ">=8.5.10"
   },

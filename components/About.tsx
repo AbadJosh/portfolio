@@ -43,6 +43,7 @@ export default function About() {
               alt="Josh relaxing — gamer at heart"
               width={680}
               height={510}
+              sizes="(max-width: 768px) 100vw, 50vw"
               style={{ width: "100%", height: "auto", borderRadius: 16, display: "block" }}
             />
             <div style={{

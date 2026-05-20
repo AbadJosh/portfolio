@@ -24,7 +24,7 @@
   --th-text1:           #0a0a0b;
   --th-text2:           #374151;
   --th-text3:           #6b7280;
-  --th-text4:           #9ca3af;
+  --th-text4:           #64748b;
 
   --th-blue:            #2563eb;
   --th-violet:          #7c3aed;
@@ -53,7 +53,7 @@
   --th-exp-dot-bg:             #ffffff;
   --th-exp-dot-border-past:    rgba(0,0,0,0.16);
   --th-exp-dot-border-inactive:rgba(0,0,0,0.06);
-  --th-exp-year-inactive:      #9ca3af;
+  --th-exp-year-inactive:      #64748b;
 
   --th-exp-board-back:         #eef2ff;
   --th-exp-board-mid:          #f4f7ff;

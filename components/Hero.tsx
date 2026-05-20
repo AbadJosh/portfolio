@@ -46,6 +46,7 @@ export default function Hero() {
             alt="Joshua D. Abad"
             fill
             priority
+            sizes="(max-width: 639px) 100vw, 75vw"
             style={{ objectFit: "contain", objectPosition: "right center" }}
           />
           <div
@@ -105,12 +106,13 @@ export default function Hero() {
             {/* Social icons */}
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
               {[
-                { href: "https://github.com/AbadJosh",             Icon: GithubIcon },
-                { href: "https://www.linkedin.com/in/joshua-abad/", Icon: LinkedinIcon },
-              ].map(({ href, Icon }) => (
+                { href: "https://github.com/AbadJosh",             Icon: GithubIcon,   label: "GitHub profile" },
+                { href: "https://www.linkedin.com/in/joshua-abad/", Icon: LinkedinIcon, label: "LinkedIn profile" },
+              ].map(({ href, Icon, label }) => (
                 <a
                   key={href}
                   href={href}
+                  aria-label={label}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
