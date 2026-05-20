@@ -142,8 +142,9 @@ export default function Experience() {
         }
         .exp-dot-btn:focus-visible { outline: 2px solid #3b82f6; border-radius: 4px; }
         @media (max-width: 479px) {
-          .exp-inner       { padding: 0 20px !important; }
-          .exp-card-body   { padding: 22px 20px !important; }
+          .exp-inner        { padding: 0 20px !important; }
+          .exp-card-body    { padding: 22px 20px !important; }
+          .exp-stack-height { height: 560px !important; }
         }
       `}</style>
 
@@ -172,6 +173,7 @@ export default function Experience() {
         >
           {/* tilted stack wrapper — animated by stackControls */}
           <motion.div
+            className="exp-stack-height"
             animate={stackControls}
             initial={{ rotateY: SLANT }}
             style={{

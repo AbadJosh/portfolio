@@ -83,11 +83,15 @@ export default function Skills() {
       <style>{`
         .sk-node { cursor: pointer; background: none; border: none; padding: 0; position: absolute; }
         .sk-node:focus-visible { outline: 2px solid #3b82f6; border-radius: 50%; }
+        /* flex centering lets justify-content:center handle overflow symmetrically,
+           fixing the broken margin:0 auto when element > parent width */
         @media (max-width: 540px) {
-          .sk-penta { transform: scale(0.58); transform-origin: top center; margin-bottom: -182px; }
+          .sk-penta-container { display: flex; justify-content: center; }
+          .sk-penta { flex-shrink: 0; margin: 0 !important; transform: scale(0.58); transform-origin: top center; margin-bottom: -182px !important; }
         }
         @media (min-width: 541px) and (max-width: 820px) {
-          .sk-penta { transform: scale(0.78); transform-origin: top center; margin-bottom: -95px; }
+          .sk-penta-container { display: flex; justify-content: center; }
+          .sk-penta { flex-shrink: 0; margin: 0 !important; transform: scale(0.78); transform-origin: top center; margin-bottom: -95px !important; }
         }
       `}</style>
 
@@ -108,6 +112,7 @@ export default function Skills() {
 
         {/* ── Pentagon wrapper (motion handles fade-in; CSS class handles responsive scale) ── */}
         <motion.div
+          className="sk-penta-container"
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
