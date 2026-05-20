@@ -16,6 +16,8 @@ body {
   background: #050b18;
   color: #e2e8f0;
   overflow-x: hidden;
+  scrollbar-width: thin;             /* Firefox */
+  scrollbar-color: #1e3a5f #050b18; /* Firefox */
 }
 
 ::-webkit-scrollbar { width: 5px; }
@@ -102,4 +104,10 @@ body {
   font-weight: 600;
   color: #3b82f6;
   margin-bottom: 0.75rem;
+}
+
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
 }

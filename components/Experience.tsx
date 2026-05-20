@@ -137,13 +137,17 @@ export default function Experience() {
       <style>{`
         .exp-dot-btn {
           display: flex; flex-direction: column; align-items: center; gap: 8px;
-          background: none; border: none; cursor: pointer; padding: 0 4px;
-          position: relative; z-index: 1;
+          background: none; border: none; cursor: pointer; padding: 4px 6px;
+          position: relative; z-index: 1; min-width: 44px;
         }
         .exp-dot-btn:focus-visible { outline: 2px solid #3b82f6; border-radius: 4px; }
+        @media (max-width: 479px) {
+          .exp-inner       { padding: 0 20px !important; }
+          .exp-card-body   { padding: 22px 20px !important; }
+        }
       `}</style>
 
-      <div style={{ maxWidth: 1000, margin: "0 auto", padding: "0 48px" }} ref={ref}>
+      <div className="exp-inner" style={{ maxWidth: 1000, margin: "0 auto", padding: "0 48px" }} ref={ref}>
 
         {/* Heading */}
         <motion.div
@@ -248,6 +252,7 @@ export default function Experience() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: direction * -40 }}
                   transition={{ duration: 0.22, ease: "easeInOut" }}
+                  className="exp-card-body"
                   style={{ padding: "34px 40px", height: "100%", boxSizing: "border-box" }}
                 >
                   {/* tag + period */}

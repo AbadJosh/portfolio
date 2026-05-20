@@ -22,6 +22,18 @@ export default function Hero() {
         justifyContent: "center",
       }}
     >
+      <style>{`
+        .hero-content { padding: 100px 48px 60px; }
+        .hero-img-overlay {
+          background: linear-gradient(to right, #050b18 0%, rgba(5,11,24,0.5) 3%, rgba(5,11,24,0.1) 6%, transparent 10%);
+        }
+        @media (max-width: 639px) {
+          .hero-content { padding: 100px 20px 60px !important; }
+          .hero-img-overlay {
+            background: linear-gradient(to right, #050b18 0%, rgba(5,11,24,0.92) 40%, rgba(5,11,24,0.7) 70%, rgba(5,11,24,0.45) 100%) !important;
+          }
+        }
+      `}</style>
       {/* Hero illustration — right 75% of screen */}
       <motion.div
         initial={{ opacity: 0, x: 80 }}
@@ -45,22 +57,18 @@ export default function Hero() {
         />
         {/* Gradient: dark on left → transparent on right so text stays readable */}
         <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to right, #050b18 0%, rgba(5,11,24,0.5) 3%, rgba(5,11,24,0.1) 6%, transparent 10%)",
-          }}
+          className="hero-img-overlay"
+          style={{ position: "absolute", inset: 0 }}
         />
       </motion.div>
 
       {/* Text content — left side, layered above image */}
       <div
+        className="hero-content"
         style={{
           position: "relative",
           zIndex: 2,
           width: "100%",
-          padding: "100px 48px 60px",
         }}
       >
         <motion.div
@@ -150,8 +158,8 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -177,8 +185,8 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

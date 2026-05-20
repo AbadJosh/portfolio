@@ -86,6 +86,15 @@ export default function Navbar() {
           .nav-links-desktop { display: flex !important; }
           .nav-burger        { display: none !important; }
         }
+        .nav-links-desktop button:focus-visible {
+          outline: 2px solid #3b82f6;
+          outline-offset: 2px;
+          border-radius: 4px;
+        }
+        @media (max-width: 479px) {
+          .nav-inner         { padding: 0 20px !important; }
+          .nav-mobile-menu   { padding-left: 20px !important; padding-right: 20px !important; }
+        }
       `}</style>
 
       <nav
@@ -104,6 +113,7 @@ export default function Navbar() {
         }}
       >
         <div
+          className="nav-inner"
           style={{
             width: "100%",
             padding: "0 48px",
@@ -183,7 +193,9 @@ export default function Navbar() {
                 borderRadius: 8,
                 cursor: "pointer",
                 color: "rgba(148,163,184,1)",
-                padding: "6px 8px",
+                padding: "11px 13px",
+                minWidth: 44,
+                minHeight: 44,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -209,6 +221,7 @@ export default function Navbar() {
               }}
             >
               <div
+                className="nav-mobile-menu"
                 style={{
                   padding: "12px 48px 20px",
                   display: "flex",

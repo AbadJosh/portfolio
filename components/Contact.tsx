@@ -50,6 +50,7 @@ export default function Contact() {
           border: 1.5px solid #1e3a5f; border-radius: 10px;
           padding: 12px 16px; font-size: 14px; color: #e2e8f0;
           outline: none; box-sizing: border-box; font-family: inherit;
+          -webkit-appearance: none; appearance: none;
           transition: border-color 0.25s, box-shadow 0.25s;
         }
         .ct-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1), 0 0 16px rgba(59,130,246,0.1); }
