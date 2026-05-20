@@ -113,19 +113,19 @@ export default function Experience() {
     const fwd = i > active;
     setDirection(fwd ? 1 : -1);
 
-    // Phase 1 — quick tilt to signal state change
+    // Phase 1 — tilt to signal state change
     await stackControls.start({
       rotateY: fwd ? SLANT + 14 : SLANT - 10,
-      transition: { duration: 0.1, ease: "easeIn" },
+      transition: { duration: 0.14, ease: "easeIn" },
     });
 
-    // Phase 2 — swap content at peak (enter/exit now run simultaneously)
+    // Phase 2 — swap content (enter/exit run simultaneously)
     setActive(i);
 
     // Phase 3 — settle back to resting slant
     stackControls.start({
       rotateY: SLANT,
-      transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
     });
   };
 
@@ -253,7 +253,7 @@ export default function Experience() {
                   initial={{ opacity: 0, x: direction * 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: direction * -20 }}
-                  transition={{ duration: 0.16, ease: "easeInOut" }}
+                  transition={{ duration: 0.28, ease: "easeInOut" }}
                   className="exp-card-body"
                   style={{
                     position: "absolute", inset: 0,
