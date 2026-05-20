@@ -237,11 +237,11 @@ export default function Contact() {
                 }}>
                   <Mail size={18} style={{ color: "#3b82f6", filter: "drop-shadow(0 0 5px #3b82f6)" }} />
                 </div>
-                <div>
+                <div style={{ minWidth: 0 }}>
                   <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#334155", marginBottom: 4 }}>
                     Email
                   </p>
-                  <p style={{ fontSize: 13, color: "#94a3b8", fontWeight: 500 }}>
+                  <p style={{ fontSize: 13, color: "#94a3b8", fontWeight: 500, wordBreak: "break-all" }}>
                     joshua.abad.development@gmail.com
                   </p>
                 </div>
