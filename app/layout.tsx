@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/lib/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +19,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full scroll-smooth">
-      <body suppressHydrationWarning className={`${inter.className} min-h-full bg-[#050b18] text-slate-200 antialiased`}>
-        {children}
+    <html lang="en" className="h-full scroll-smooth" suppressHydrationWarning>
+      {/* Prevent flash: read localStorage before first paint */}
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}` }} />
+      </head>
+      <body suppressHydrationWarning className={`${inter.className} min-h-full antialiased`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

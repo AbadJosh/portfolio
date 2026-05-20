@@ -33,10 +33,10 @@ const certifications = [
 
 export default function Resume() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, amount: 0 });
 
   return (
-    <section id="resume" style={{ background: "#060d1f", padding: "100px 0" }}>
+    <section id="resume" style={{ background: "var(--th-bg)", padding: "100px 0" }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 48px" }} ref={ref}>
 
         {/* Heading + Download */}
@@ -78,7 +78,7 @@ export default function Resume() {
               style={{
                 padding: "24px 26px",
                 borderRadius: 16,
-                background: "#050b18",
+                background: "var(--th-card-bg)",
                 borderTop: `1px solid ${cert.color}35`,
                 borderRight: `1px solid ${cert.color}35`,
                 borderBottom: `1px solid ${cert.color}35`,
@@ -107,7 +107,7 @@ export default function Resume() {
                   <Award size={20} style={{ color: cert.color, filter: `drop-shadow(0 0 5px ${cert.color})` }} />
                 </div>
                 <div>
-                  <p style={{ fontSize: 15, fontWeight: 700, color: "#f1f5f9", marginBottom: 6, lineHeight: 1.3 }}>
+                  <p style={{ fontSize: 15, fontWeight: 700, color: "var(--th-text1)", marginBottom: 6, lineHeight: 1.3 }}>
                     {cert.name}
                   </p>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -119,7 +119,7 @@ export default function Resume() {
                       color: cert.color,
                       textTransform: "uppercase",
                     }}>{cert.badge}</span>
-                    <span style={{ fontSize: 12, color: "#475569" }}>{cert.issuer}</span>
+                    <span style={{ fontSize: 12, color: "var(--th-text3)" }}>{cert.issuer}</span>
                   </div>
                 </div>
               </div>

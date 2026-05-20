@@ -4,28 +4,22 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
+import { useTheme } from "@/lib/ThemeContext";
 
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0 });
+  const { isDark } = useTheme();
 
   return (
-    <section id="about" style={{ background: "#060d1f", padding: "96px 0" }}>
+    <section id="about" style={{ background: "var(--th-surface)", padding: "96px 0" }}>
       <style>{`
-        .about-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 48px;
-          align-items: center;
-        }
-        @media (min-width: 768px) {
-          .about-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
-        }
+        .about-grid { display:grid; grid-template-columns:1fr; gap:48px; align-items:center; }
+        @media (min-width:768px) { .about-grid { grid-template-columns:1fr 1fr; gap:64px; } }
       `}</style>
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 48px" }} ref={ref}>
 
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -45,21 +39,16 @@ export default function About() {
             style={{ position: "relative", borderRadius: 16, overflow: "hidden", lineHeight: 0 }}
           >
             <Image
-              src="/about-me-page.png"
+              src={isDark ? "/about-me-page.png" : "/about-me-page-white.png"}
               alt="Josh relaxing — gamer at heart"
               width={680}
               height={510}
               style={{ width: "100%", height: "auto", borderRadius: 16, display: "block" }}
               priority
             />
-            {/* subtle bottom fade */}
             <div style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 80,
-              background: "linear-gradient(to top, #060d1f, transparent)",
+              position: "absolute", bottom: 0, left: 0, right: 0, height: 80,
+              background: "linear-gradient(to top, var(--th-about-fade), transparent)",
               borderRadius: "0 0 16px 16px",
             }} />
           </motion.div>
@@ -70,18 +59,18 @@ export default function About() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.15 }}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: 16, color: "#94a3b8", fontSize: 15, lineHeight: 1.85, marginBottom: 32 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16, color: "var(--th-about-body)", fontSize: 15, lineHeight: 1.85, marginBottom: 32 }}>
               <p style={{ margin: 0 }}>
-                I&apos;m <strong style={{ color: "#fff" }}>Joshua D. Abad</strong> — most people call me{" "}
-                <strong style={{ color: "#fff" }}>Josh</strong>, or just{" "}
-                <strong style={{ color: "#fff" }}>Bad</strong> (short for Abad, the nickname that stuck).
+                I&apos;m <strong style={{ color: "var(--th-about-strong)" }}>Joshua D. Abad</strong> — most people call me{" "}
+                <strong style={{ color: "var(--th-about-strong)" }}>Josh</strong>, or just{" "}
+                <strong style={{ color: "var(--th-about-strong)" }}>Bad</strong> (short for Abad, the nickname that stuck).
                 I&apos;m a Data Engineer based in Calabarzon, Philippines, working remotely with clients internationally.
               </p>
               <p style={{ margin: 0 }}>
                 With 7+ years of hands-on experience, I specialize in designing and building scalable data pipelines,
                 cloud data platforms, and ETL/ELT frameworks that transform raw data into reliable signals for business
                 decisions. Every system I ship is held to one standard:{" "}
-                <span style={{ color: "#cbd5e1" }}>reliable, robust, and ready to scale.</span>
+                <span style={{ color: "var(--th-about-strong)" }}>reliable, robust, and ready to scale.</span>
               </p>
               <p style={{ margin: 0 }}>
                 I care deeply about data quality, observability, and building infrastructure that teams genuinely enjoy
@@ -105,20 +94,18 @@ export default function About() {
               border: "1px solid rgba(59,130,246,0.15)",
             }}>
               <div style={{
-                position: "absolute",
-                left: 0, top: 0, bottom: 0,
-                width: 3,
+                position: "absolute", left: 0, top: 0, bottom: 0, width: 3,
                 borderRadius: "12px 0 0 12px",
-                background: "linear-gradient(180deg, #3b82f6, #6d28d9)",
+                background: "linear-gradient(180deg, var(--th-blue), var(--th-violet))",
               }} />
-              <p style={{ margin: 0, fontSize: 14, fontStyle: "italic", color: "#cbd5e1", lineHeight: 1.7 }}>
+              <p style={{ margin: 0, fontSize: 14, fontStyle: "italic", color: "var(--th-about-quote)", lineHeight: 1.7 }}>
                 &ldquo;Data is only as valuable as the infrastructure built to move and shape it.&rdquo;
               </p>
             </div>
 
             {/* Location */}
-            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#475569", fontSize: 13 }}>
-              <MapPin size={13} style={{ color: "#3b82f6", flexShrink: 0 }} />
+            <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--th-text3)", fontSize: 13 }}>
+              <MapPin size={13} style={{ color: "var(--th-blue)", flexShrink: 0 }} />
               Calabarzon, Philippines · Open to Remote Worldwide
             </div>
           </motion.div>

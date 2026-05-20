@@ -58,17 +58,27 @@ const projects = [
 
 export default function Projects() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, amount: 0 });
 
   return (
-    <section id="projects" className="py-24 bg-[#060d1f]">
-      <div className="max-w-6xl mx-auto px-6 sm:px-10" ref={ref}>
+    <section id="projects" style={{ background: "var(--th-bg)", padding: "96px 0" }}>
+      <style>{`
+        .proj-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 640px) { .proj-grid { grid-template-columns: 1fr 1fr; } }
+        .proj-tag {
+          padding: 2px 10px; border-radius: 6px; font-size: 11px;
+          border: 1px solid var(--th-border); color: var(--th-text4);
+          background: var(--th-surface-alt);
+        }
+      `}</style>
+
+      <div style={{ maxWidth: 1152, margin: "0 auto", padding: "0 40px" }} ref={ref}>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-14"
+          style={{ textAlign: "center", marginBottom: 56 }}
         >
           <h2 className="section-heading">Projects</h2>
         </motion.div>
@@ -77,39 +87,35 @@ export default function Projects() {
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
-          className="mb-10"
+          style={{ marginBottom: 40 }}
         >
           <h3 className="section-subheading">What I&apos;ve Built</h3>
-          <p className="text-slate-400 text-sm">
+          <p style={{ color: "var(--th-text3)", fontSize: 14 }}>
             Production-grade data systems built to scale and engineered for impact.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 gap-5">
+        <div className="proj-grid">
           {projects.map((p, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.15 + i * 0.07 }}
-              className="card p-6 flex flex-col"
+              className="card"
+              style={{ padding: "24px", display: "flex", flexDirection: "column" }}
             >
-              <h3 className="text-white font-semibold text-base mb-2">{p.title}</h3>
+              <h3 style={{ color: "var(--th-text1)", fontWeight: 600, fontSize: 15, marginBottom: 8 }}>{p.title}</h3>
 
-              <p className="text-[#3b82f6] text-xs mb-3 font-medium">{p.metrics}</p>
+              <p style={{ color: "var(--th-blue)", fontSize: 12, marginBottom: 12, fontWeight: 500 }}>{p.metrics}</p>
 
-              <p className="text-slate-400 text-sm leading-relaxed flex-1 mb-4">
+              <p style={{ color: "var(--th-text3)", fontSize: 14, lineHeight: 1.65, flex: 1, marginBottom: 16 }}>
                 {p.description}
               </p>
 
-              <div className="flex flex-wrap gap-1.5 mb-4">
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
                 {p.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-0.5 text-xs border border-[#1e3a5f] rounded text-slate-500 bg-[#060d1f]"
-                  >
-                    {tag}
-                  </span>
+                  <span key={tag} className="proj-tag">{tag}</span>
                 ))}
               </div>
 
@@ -117,7 +123,7 @@ export default function Projects() {
                 href={p.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-[#3b82f6] text-sm font-medium hover:underline"
+                style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--th-blue)", fontSize: 14, fontWeight: 500, textDecoration: "none" }}
               >
                 Read more <ArrowRight size={13} />
               </a>
@@ -129,13 +135,14 @@ export default function Projects() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6 }}
-          className="text-center mt-10"
+          style={{ textAlign: "center", marginTop: 40 }}
         >
           <a
             href="https://github.com/jabadDEV"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-ghost inline-flex"
+            className="btn-ghost"
+            style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}
           >
             <GithubIcon size={16} /> Show More
           </a>

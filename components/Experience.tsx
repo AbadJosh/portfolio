@@ -99,7 +99,7 @@ const timeline = [
   },
 ];
 
-const SLANT = 28; // base rotateY degrees
+const SLANT = 28;
 
 export default function Experience() {
   const [active, setActive]       = useState(timeline.length - 1);
@@ -112,45 +112,32 @@ export default function Experience() {
     if (i === active) return;
     const fwd = i > active;
     setDirection(fwd ? 1 : -1);
-
-    // Phase 1 — tilt to signal state change
-    await stackControls.start({
-      rotateY: fwd ? SLANT + 14 : SLANT - 10,
-      transition: { duration: 0.14, ease: "easeIn" },
-    });
-
-    // Phase 2 — swap content (enter/exit run simultaneously)
+    await stackControls.start({ rotateY: fwd ? SLANT + 14 : SLANT - 10, transition: { duration: 0.14, ease: "easeIn" } });
     setActive(i);
-
-    // Phase 3 — settle back to resting slant
-    stackControls.start({
-      rotateY: SLANT,
-      transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
-    });
+    stackControls.start({ rotateY: SLANT, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } });
   };
 
   const item = timeline[active];
   const c    = item.color;
 
   return (
-    <section id="experience" style={{ background: "#050b18", padding: "100px 0", overflowX: "hidden" }}>
+    <section id="experience" style={{ background: "var(--th-bg)", padding: "100px 0", overflowX: "hidden" }}>
       <style>{`
         .exp-dot-btn {
-          display: flex; flex-direction: column; align-items: center; gap: 8px;
-          background: none; border: none; cursor: pointer; padding: 4px 6px;
-          position: relative; z-index: 1; min-width: 44px;
+          display:flex; flex-direction:column; align-items:center; gap:8px;
+          background:none; border:none; cursor:pointer; padding:4px 6px;
+          position:relative; z-index:1; min-width:44px;
         }
-        .exp-dot-btn:focus-visible { outline: 2px solid #3b82f6; border-radius: 4px; }
-        @media (max-width: 479px) {
-          .exp-inner        { padding: 0 20px !important; }
-          .exp-card-body    { padding: 22px 20px !important; }
-          .exp-stack-height { height: 560px !important; }
+        .exp-dot-btn:focus-visible { outline:2px solid var(--th-blue); border-radius:4px; }
+        @media (max-width:479px) {
+          .exp-inner     { padding:0 20px !important; }
+          .exp-card-body { padding:22px 20px !important; }
+          .exp-stack-height { height:560px !important; }
         }
       `}</style>
 
       <div className="exp-inner" style={{ maxWidth: 1000, margin: "0 auto", padding: "0 48px" }} ref={ref}>
 
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -160,36 +147,27 @@ export default function Experience() {
           <h2 className="section-heading">Experience &amp; Education</h2>
         </motion.div>
 
-        {/* ── 3D Board Stack ── */}
+        {/* ── 3D Board Stack — always dark, intentional ── */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.15 }}
-          style={{
-            perspective: "2000px",
-            perspectiveOrigin: "35% 50%",
-            marginBottom: 88,
-          }}
+          style={{ perspective: "2000px", perspectiveOrigin: "35% 50%", marginBottom: 88 }}
         >
-          {/* tilted stack wrapper — animated by stackControls */}
           <motion.div
             className="exp-stack-height"
             animate={stackControls}
             initial={{ rotateY: SLANT }}
-            style={{
-              position: "relative",
-              height: 480,
-              transformStyle: "preserve-3d",
-            }}
+            style={{ position: "relative", height: 480, transformStyle: "preserve-3d" }}
           >
-            {/* Board 3 — back (stacks to the LEFT) */}
+            {/* Board 3 — back */}
             <div style={{
               position: "absolute", inset: 0,
               transform: "translateZ(-110px) translateX(-58px) translateY(12px)",
               borderRadius: 20,
-              background: "#060c1a",
-              border: `1px solid ${c}1e`,
-              boxShadow: `0 0 6px ${c}1e, 0 0 18px ${c}0f`,
+              background: "var(--th-exp-board-back)",
+              border: `1px solid ${c}3a`,
+              boxShadow: `0 0 6px ${c}22, 0 0 18px ${c}14`,
               transition: "border-color 0.4s, box-shadow 0.4s",
             }} />
 
@@ -198,29 +176,29 @@ export default function Experience() {
               position: "absolute", inset: 0,
               transform: "translateZ(-55px) translateX(-29px) translateY(6px)",
               borderRadius: 20,
-              background: "#07101f",
-              border: `1px solid ${c}50`,
-              boxShadow: `0 0 8px ${c}44, 0 0 22px ${c}22`,
+              background: "var(--th-exp-board-mid)",
+              border: `1px solid ${c}66`,
+              boxShadow: `0 0 8px ${c}55, 0 0 22px ${c}2a`,
               transition: "border-color 0.4s, box-shadow 0.4s",
             }} />
 
-            {/* Board 1 — front (full width) */}
+            {/* Board 1 — front */}
             <div style={{
               position: "absolute", inset: 0,
               transform: "translateZ(0)",
               borderRadius: 20,
-              background: "linear-gradient(150deg, #0d1530 0%, #07101f 100%)",
+              background: "var(--th-exp-board-front)",
               border: `1.5px solid ${c}`,
               boxShadow: `0 0 10px ${c}, 0 0 28px ${c}99, 0 0 60px ${c}44, inset 0 0 24px ${c}0a`,
               overflow: "hidden",
               transition: "border-color 0.4s, box-shadow 0.4s",
             }}>
-              {/* corner accents */}
+              {/* Corner accents */}
               {([
-                { top: 10,    left: 10,  bt: true,  bl: true,  br: "6px 0 0 0" },
-                { top: 10,    right: 10, bt: true,  br_: true, br: "0 6px 0 0" },
-                { bottom: 10, left: 10,  bb: true,  bl: true,  br: "0 0 0 6px" },
-                { bottom: 10, right: 10, bb: true,  br_: true, br: "0 0 6px 0" },
+                { top: 10,    left: 10,  bt: true,  bl: true,  br_: false, bb: false, br: "6px 0 0 0" },
+                { top: 10,    right: 10, bt: true,  bl: false, br_: true,  bb: false, br: "0 6px 0 0" },
+                { bottom: 10, left: 10,  bt: false, bl: true,  br_: false, bb: true,  br: "0 0 0 6px" },
+                { bottom: 10, right: 10, bt: false, bl: false, br_: true,  bb: true,  br: "0 0 6px 0" },
               ] as const).map((corner, i) => (
                 <div key={i} style={{
                   position: "absolute",
@@ -236,16 +214,14 @@ export default function Experience() {
                 }} />
               ))}
 
-              {/* ambient glow */}
+              {/* Ambient glow */}
               <div style={{
-                position: "absolute", top: -100, right: -100,
-                width: 320, height: 320, borderRadius: "50%",
+                position: "absolute", top: -100, right: -100, width: 320, height: 320, borderRadius: "50%",
                 background: `radial-gradient(circle, ${c}12 0%, transparent 65%)`,
-                pointerEvents: "none",
-                transition: "background 0.4s",
+                pointerEvents: "none", transition: "background 0.4s",
               }} />
 
-              {/* content — absolute so enter/exit overlap without layout shift */}
+              {/* Card content */}
               <AnimatePresence custom={direction}>
                 <motion.div
                   key={active}
@@ -255,27 +231,21 @@ export default function Experience() {
                   exit={{ opacity: 0, x: direction * -20 }}
                   transition={{ duration: 0.28, ease: "easeInOut" }}
                   className="exp-card-body"
-                  style={{
-                    position: "absolute", inset: 0,
-                    padding: "34px 40px", boxSizing: "border-box",
-                    willChange: "transform, opacity",
-                    overflowY: "auto",
-                  }}
+                  style={{ position: "absolute", inset: 0, padding: "34px 40px", boxSizing: "border-box", willChange: "transform, opacity", overflowY: "auto" }}
                 >
-                  {/* tag + period */}
+                  {/* Tag + period */}
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
                     <span style={{
-                      fontSize: 10, fontWeight: 700, letterSpacing: "0.12em",
-                      textTransform: "uppercase",
+                      fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
                       padding: "4px 12px", borderRadius: 99,
                       background: `${c}18`, color: c,
                       border: `1px solid ${c}55`,
                       boxShadow: `0 0 8px ${c}55`,
                     }}>{item.tag}</span>
-                    <span style={{ color: "#475569", fontSize: 12 }}>{item.period}</span>
+                    <span style={{ color: "var(--th-exp-board-period)", fontSize: 12 }}>{item.period}</span>
                   </div>
 
-                  {/* role + company */}
+                  {/* Role + company */}
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginBottom: 24 }}>
                     <div style={{
                       width: 52, height: 52, borderRadius: 14, flexShrink: 0,
@@ -286,25 +256,18 @@ export default function Experience() {
                       <item.icon size={22} style={{ color: c }} />
                     </div>
                     <div>
-                      <h3 style={{ margin: "0 0 4px", fontSize: 21, fontWeight: 700, color: "#fff", lineHeight: 1.2 }}>
-                        {item.role}
-                      </h3>
-                      <p style={{ margin: "0 0 2px", fontSize: 14, fontWeight: 600, color: c, textShadow: `0 0 10px ${c}88` }}>
-                        {item.company}
-                      </p>
-                      <p style={{ margin: 0, fontSize: 12, color: "#475569" }}>{item.location}</p>
+                      <h3 style={{ margin: "0 0 4px", fontSize: 21, fontWeight: 700, color: "var(--th-exp-board-title)", lineHeight: 1.2 }}>{item.role}</h3>
+                      <p style={{ margin: "0 0 2px", fontSize: 14, fontWeight: 600, color: c, textShadow: `0 0 10px ${c}88` }}>{item.company}</p>
+                      <p style={{ margin: 0, fontSize: 12, color: "var(--th-exp-board-period)" }}>{item.location}</p>
                     </div>
                   </div>
 
-                  {/* bullets */}
+                  {/* Bullets */}
                   <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
                     {item.bullets.map((b, i) => (
                       <li key={i} style={{ display: "flex", gap: 11, alignItems: "flex-start" }}>
-                        <span style={{
-                          marginTop: 8, width: 5, height: 5, borderRadius: "50%",
-                          background: c, boxShadow: `0 0 5px ${c}`, flexShrink: 0,
-                        }} />
-                        <span style={{ fontSize: 13.5, color: "#94a3b8", lineHeight: 1.7 }}>{b}</span>
+                        <span style={{ marginTop: 8, width: 5, height: 5, borderRadius: "50%", background: c, boxShadow: `0 0 5px ${c}`, flexShrink: 0 }} />
+                        <span style={{ fontSize: 13.5, color: "var(--th-exp-board-body)", lineHeight: 1.7 }}>{b}</span>
                       </li>
                     ))}
                   </ul>
@@ -314,87 +277,84 @@ export default function Experience() {
           </motion.div>
         </motion.div>
 
-        {/* ── Horizontal Timeline ── */}
+        {/* ── Horizontal Timeline — themed ── */}
         <div style={{ maxWidth: 700, margin: "0 auto" }}>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.35 }}
-          style={{ position: "relative", padding: "0 16px" }}
-        >
-          {/* track */}
-          <div style={{
-            position: "absolute", top: 14, left: 48, right: 48,
-            height: 3, background: "#0d1e35", borderRadius: 3,
-          }} />
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            style={{ position: "relative", padding: "0 16px" }}
+          >
+            {/* Track */}
+            <div style={{
+              position: "absolute", top: 14, left: 48, right: 48,
+              height: 3, background: "var(--th-exp-track)", borderRadius: 3,
+            }} />
 
-          {/* fill */}
-          <div style={{
-            position: "absolute", top: 14, left: 48,
-            height: 3, borderRadius: 3,
-            background: `linear-gradient(90deg, #3b82f6, ${c})`,
-            width: `calc(${(active / (timeline.length - 1)) * 100}% * ((100% - 96px) / 100%))`,
-            transition: "width 0.4s ease, background 0.4s ease",
-            boxShadow: `0 0 8px ${c}99`,
-          }} />
+            {/* Fill */}
+            <div style={{
+              position: "absolute", top: 14, left: 48,
+              height: 3, borderRadius: 3,
+              background: `linear-gradient(90deg, var(--th-blue), ${c})`,
+              width: `calc(${(active / (timeline.length - 1)) * 100}% * ((100% - 96px) / 100%))`,
+              transition: "width 0.4s ease, background 0.4s ease",
+              boxShadow: `0 0 8px ${c}99`,
+            }} />
 
-          {/* dots */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            {timeline.map((t, i) => {
-              const isActive = i === active;
-              const isPast   = i < active;
-              return (
-                <button key={i} className="exp-dot-btn" onClick={() => select(i)} title={`${t.role} · ${t.company}`}>
-                  <div style={{ position: "relative", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {isActive && (
-                      <motion.div
-                        animate={{ scale: [1, 1.7], opacity: [0.7, 0] }}
-                        transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
-                        style={{
-                          position: "absolute", inset: -2, borderRadius: "50%",
-                          border: `1.5px solid ${t.color}`, pointerEvents: "none",
-                        }}
-                      />
-                    )}
-                    <div style={{
-                      width: 28, height: 28, borderRadius: "50%",
-                      border: `2px solid ${isActive ? t.color : isPast ? "#1e3a5f" : "#0d1e35"}`,
-                      background: "#050b18",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      boxShadow: isActive ? `0 0 12px ${t.color}, 0 0 28px ${t.color}88` : "none",
-                      transform: isActive ? "scale(1.25)" : "scale(1)",
-                      transition: "all 0.3s ease",
-                    }}>
+            {/* Dots */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              {timeline.map((t, i) => {
+                const isActive = i === active;
+                const isPast   = i < active;
+                return (
+                  <button key={i} className="exp-dot-btn" onClick={() => select(i)} title={`${t.role} · ${t.company}`}>
+                    <div style={{ position: "relative", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      {isActive && (
+                        <motion.div
+                          animate={{ scale: [1, 1.7], opacity: [0.7, 0] }}
+                          transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
+                          style={{ position: "absolute", inset: -2, borderRadius: "50%", border: `1.5px solid ${t.color}`, pointerEvents: "none" }}
+                        />
+                      )}
                       <div style={{
-                        width: 11, height: 11, borderRadius: "50%",
-                        background: isActive ? t.color : isPast ? "#1e3a5f" : "#0d1e35",
-                        boxShadow: isActive ? `0 0 6px ${t.color}` : "none",
+                        width: 28, height: 28, borderRadius: "50%",
+                        border: `2px solid ${isActive ? t.color : isPast ? "var(--th-exp-dot-border-past)" : "var(--th-exp-dot-border-inactive)"}`,
+                        background: "var(--th-exp-dot-bg)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        boxShadow: isActive ? `0 0 12px ${t.color}, 0 0 28px ${t.color}88` : "none",
+                        transform: isActive ? "scale(1.25)" : "scale(1)",
                         transition: "all 0.3s ease",
-                      }} />
+                      }}>
+                        <div style={{
+                          width: 11, height: 11, borderRadius: "50%",
+                          background: isActive ? t.color : isPast ? "var(--th-exp-dot-border-past)" : "var(--th-exp-dot-border-inactive)",
+                          boxShadow: isActive ? `0 0 6px ${t.color}` : "none",
+                          transition: "all 0.3s ease",
+                        }} />
+                      </div>
                     </div>
-                  </div>
 
-                  <span style={{
-                    fontSize: 12, fontWeight: isActive ? 700 : 500,
-                    color: isActive ? t.color : "#334155",
-                    textShadow: isActive ? `0 0 10px ${t.color}` : "none",
-                    transition: "color 0.3s", whiteSpace: "nowrap",
-                  }}>{t.year}</span>
+                    <span style={{
+                      fontSize: 12, fontWeight: isActive ? 700 : 500,
+                      color: isActive ? t.color : "var(--th-exp-year-inactive)",
+                      textShadow: isActive ? `0 0 10px ${t.color}` : "none",
+                      transition: "color 0.3s", whiteSpace: "nowrap",
+                    }}>{t.year}</span>
 
-                  {isActive && (
-                    <motion.span
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      style={{ fontSize: 10, color: "#64748b", textAlign: "center", lineHeight: 1.3, maxWidth: 88, display: "block" }}
-                    >
-                      {t.company}
-                    </motion.span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </motion.div>
+                    {isActive && (
+                      <motion.span
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        style={{ fontSize: 10, color: "var(--th-text3)", textAlign: "center", lineHeight: 1.3, maxWidth: 88, display: "block" }}
+                      >
+                        {t.company}
+                      </motion.span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
         </div>
 
       </div>
