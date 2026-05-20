@@ -10,30 +10,26 @@ export default function Hero() {
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section
-      id="home"
-      style={{
-        position: "relative",
-        minHeight: "100vh",
-        overflow: "hidden",
-        background: "#050b18",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <>
+      {/* Mobile overrides only — defaults live in inline styles below */}
       <style>{`
-        .hero-content { padding: 100px 48px 60px; }
-        .hero-img-overlay {
-          background: linear-gradient(to right, #050b18 0%, rgba(5,11,24,0.5) 3%, rgba(5,11,24,0.1) 6%, transparent 10%);
-        }
         @media (max-width: 639px) {
-          .hero-content { padding: 100px 20px 60px !important; }
-          .hero-img-overlay {
-            background: linear-gradient(to right, #050b18 0%, rgba(5,11,24,0.92) 40%, rgba(5,11,24,0.7) 70%, rgba(5,11,24,0.45) 100%) !important;
-          }
+          .hero-content    { padding-left: 20px !important; padding-right: 20px !important; }
+          .hero-img-overlay { background: linear-gradient(to right, #050b18 0%, rgba(5,11,24,0.92) 40%, rgba(5,11,24,0.7) 70%, rgba(5,11,24,0.45) 100%) !important; }
         }
       `}</style>
+      <section
+        id="home"
+        style={{
+          position: "relative",
+          minHeight: "100vh",
+          overflow: "hidden",
+          background: "#050b18",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
       {/* Hero illustration — right 75% of screen */}
       <motion.div
         initial={{ opacity: 0, x: 80 }}
@@ -58,7 +54,11 @@ export default function Hero() {
         {/* Gradient: dark on left → transparent on right so text stays readable */}
         <div
           className="hero-img-overlay"
-          style={{ position: "absolute", inset: 0 }}
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to right, #050b18 0%, rgba(5,11,24,0.5) 3%, rgba(5,11,24,0.1) 6%, transparent 10%)",
+          }}
         />
       </motion.div>
 
@@ -69,6 +69,7 @@ export default function Hero() {
           position: "relative",
           zIndex: 2,
           width: "100%",
+          padding: "100px 48px 60px",
         }}
       >
         <motion.div
@@ -241,6 +242,7 @@ export default function Hero() {
           ))}
         </motion.div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }
