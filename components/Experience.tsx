@@ -105,7 +105,7 @@ export default function Experience() {
   const [active, setActive]       = useState(timeline.length - 1);
   const [direction, setDirection] = useState(1);
   const ref                       = useRef(null);
-  const inView                    = useInView(ref, { once: true, margin: "-80px" });
+  const inView                    = useInView(ref, { once: true, amount: 0 });
   const stackControls             = useAnimation();
 
   const select = async (i: number) => {

@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function About() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, amount: 0 });
 
   return (
     <section id="about" style={{ background: "#060d1f", padding: "96px 0" }}>

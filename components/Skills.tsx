@@ -75,7 +75,7 @@ const categories = [
 export default function Skills() {
   const [active, setActive] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, amount: 0 });
   const cat = categories[active];
 
   return (
