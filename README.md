@@ -2,7 +2,7 @@
 
 Personal portfolio site for a Data Engineer based in the Philippines. Built with Next.js 16, React 19, and Tailwind CSS v4. Features animated sections, a working contact form, and a dark cyberpunk aesthetic.
 
-**Live site:** [abadjosha.vercel.app](https://abadjosha.vercel.app) <!-- update once deployed -->
+**Live site:** [abadjoshua.dev](https://abadjoshua.dev)
 
 ---
 
