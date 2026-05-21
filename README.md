@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Joshua D. Abad — Portfolio
+
+Personal portfolio site for a Data Engineer based in the Philippines. Built with Next.js 16, React 19, and Tailwind CSS v4. Features animated sections, a working contact form, and a dark cyberpunk aesthetic.
+
+**Live site:** [abadjosha.vercel.app](https://abadjosha.vercel.app) <!-- update once deployed -->
+
+---
+
+## Tech Stack
+
+| Layer | Tech |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI | React 19 + TypeScript 5 |
+| Styling | Tailwind CSS v4 + Framer Motion |
+| Email | Resend |
+| Deployment | Vercel |
+
+---
+
+## Sections
+
+- **Hero** — Typewriter tagline, CTA buttons
+- **About** — Bio + experience timeline
+- **Skills** — Categorized skill pills
+- **Projects** — Six-card project grid
+- **Resume** — Jobs, certs, and education
+- **Contact** — Form with rate limiting, CSRF protection, and honeypot spam guard
+
+---
 
 ## Getting Started
 
-First, run the development server:
+**Prerequisites:** Node.js 18+
 
 ```bash
+npm install
+cp .env.example .env.local   # fill in the keys
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Purpose |
+|---|---|---|
+| `RESEND_API_KEY` | Yes | Resend email delivery |
+| `CONTACT_EMAIL` | Yes | Destination inbox for contact form |
+| `CONTACT_FROM` | Yes | Sender address (must be verified in Resend) |
 
-## Learn More
+### Commands
 
-To learn more about Next.js, take a look at the following resources:
+| Command | Description |
+|---|---|
+| `npm run dev` | Start dev server (Turbopack) |
+| `npm run build` | Production build |
+| `npm start` | Run production build |
+| `npm run lint` | ESLint check |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+1. Push to GitHub
+2. Import the repo at [vercel.com/new](https://vercel.com/new)
+3. Add the three environment variables under **Project Settings → Environment Variables**
+4. Deploy — Vercel auto-detects Next.js
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+MIT
