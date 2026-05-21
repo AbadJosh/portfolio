@@ -1,4 +1,3 @@
-import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -9,16 +8,11 @@ const nextConfig: NextConfig = {
     inlineCss: true,
     optimizePackageImports: ["framer-motion"],
   },
-  webpack(config, { isServer, webpack }) {
-    if (!isServer) {
-      config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(
-          /next[\\/]dist[\\/](esm[\\/])?build[\\/]polyfills[\\/]polyfill-module/,
-          path.join(process.cwd(), "lib", "polyfill-override.js")
-        )
-      );
-    }
-    return config;
+  turbopack: {
+    resolveAlias: {
+      "next/dist/build/polyfills/polyfill-module": "./lib/polyfill-override.js",
+      "next/dist/esm/build/polyfills/polyfill-module": "./lib/polyfill-override.js",
+    },
   },
 };
 

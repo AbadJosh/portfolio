@@ -7,10 +7,6 @@ function requireEnv(name: string): string {
   return val;
 }
 
-const resend = new Resend(requireEnv("RESEND_API_KEY"));
-const contactEmail = requireEnv("CONTACT_EMAIL");
-const contactFrom = requireEnv("CONTACT_FROM");
-
 // In-memory rate limiter: 5 requests per IP per hour
 const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_MAX = 5;
@@ -41,6 +37,10 @@ const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
 
 export async function POST(request: NextRequest) {
+  const resend = new Resend(requireEnv("RESEND_API_KEY"));
+  const contactEmail = requireEnv("CONTACT_EMAIL");
+  const contactFrom = requireEnv("CONTACT_FROM");
+
   // CSRF: verify request originates from same host
   const origin = request.headers.get("origin");
   const host = request.headers.get("host");
